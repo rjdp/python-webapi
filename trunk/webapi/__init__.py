@@ -27,7 +27,6 @@ class WebApi(object):
 			self._method = method
 		if returntype:
 			self._returntype = returntype
-		print self._returntype
 	
 	def _fetch(self, call, query, method):
 		if method == "post":
