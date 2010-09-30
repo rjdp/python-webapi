@@ -6,5 +6,5 @@ class FacebookApi(WebApi):
 	
 	def page(self, objectid):
 		self._curcall = str(objectid)
-		return self.api()
+		return self.call()
 
