@@ -1,7 +1,5 @@
 #summary Roadmap for python-webapi development.
 
-= Roadmap =
-
 == Oauth2 and HTTPS support ==
 
 Many APIs support the oauth2 protocol for user authentication. It would be nice to offer a simple interface for authorizing a WebApi instance to a specific site user. HTTPS support should be added before user authentication to promote security.
