@@ -16,11 +16,18 @@ except:
 
 
 class WebApi(object):
+	_url = ""
+	_method = "get"
+	_returntype = "text"
 	
-	def __init__(self, url, method="get", returntype="text"):
-		self._url = url
-		self._method = method
-		self._returntype = returntype
+	def __init__(self, url=None, method=None, returntype=None):
+		if url:
+			self._url = url
+		if method:
+			self._method = method
+		if returntype:
+			self._returntype = returntype
+		print self._returntype
 	
 	def _fetch(self, call, query, method):
 		if method == "post":
@@ -42,7 +49,11 @@ class WebApi(object):
 		else:
 			returntype = self._returntype
 		query = urllib.urlencode(kwargs)
-		return self._fetch(self._curcall, query, returntype)
+		response = self._fetch(self._curcall, query, method)
+		if returntype == "json":
+			return json.loads(response)
+		else:
+			return response
 	
 	def __getattr__(self, name):
 		self._curcall = name
