@@ -19,6 +19,26 @@ api._deauthorize()
 It is often the case that APIs don't follow the same url call, query list, and http method paradigms. It would be nice to allow user configuration of more complicated APIs through a simple config file (kind of like a model definition). Programmers could write their own definitions for non-standard APIs. Sites offering APIs could also provide API definitions for developers (pragmatic API docs).
 Adding API definition files would also give developers a mechanism to alias longer API calls (or api calls that contain illegal characters [like the '-']) to shorter method names.
 
+API definitions could be accomplished by subclassing WebApi. Take the following example:
+
+{{{
+class FacebookApi(WebApi):
+    _url = "http://graph.facebook.com/"
+    
+    def page(objectid):
+        self._curcall = objectid
+        return self.api()
+}}}
+
+Notice how in the above example, I've set the internal url variable to Facebook's graph url. I've also created a special method called "page" that can fetch any facebook entity given an object id. This would have been impossible to do using the __attrs__ method, as facebook object ids are invalid as attributes.
+
+Here's example usage of the FacebookApi subclass:
+
+{{{
+fb = new FacebookApi()
+fb.search(q = "foo")
+fb.page(13371337)
+}}}
 
 == Python 3 support ==
 
