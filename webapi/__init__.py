@@ -36,7 +36,7 @@ class WebApi(object):
 		response = urllib2.urlopen(req)
 		return response.read()
 	
-	def api(self, **kwargs):
+	def call(self, **kwargs):
 		if "_method" in kwargs:
 			method = kwargs["_method"].lower()
 			del kwargs["_method"]
@@ -56,4 +56,4 @@ class WebApi(object):
 	
 	def __getattr__(self, name):
 		self._curcall = name
-		return self.api
+		return self.call
