@@ -28,15 +28,10 @@ class WebApi(object):
 		if returntype:
 			self._returntype = returntype
 	
-	def _fetch(self, call, query, method):
-		if method == "post":
-			req = urllib2.Request(self._url+call, query)
-		else:
-			req = urllib2.Request(self._url+call+"?"+query)
-		response = urllib2.urlopen(req)
-		return response.read()
-	
-	def call(self, **kwargs):
+	def call(self, url=None, **kwargs):
+		# Process special args
+		if url:
+			self._curcall = url
 		if "_method" in kwargs:
 			method = kwargs["_method"].lower()
 			del kwargs["_method"]
@@ -47,8 +42,15 @@ class WebApi(object):
 			del kwargs["_returntype"]
 		else:
 			returntype = self._returntype
+		# Construct query
 		query = urllib.urlencode(kwargs)
-		response = self._fetch(self._curcall, query, method)
+		if method == "post":
+			req = urllib2.Request(self._url+self._curcall, query)
+		else:
+			req = urllib2.Request(self._url+self._curcall+"?"+query)
+		# Execute query
+		response = urllib2.urlopen(req).read()
+		# Process returned data
 		if returntype == "json":
 			return json.loads(response)
 		else:
