@@ -17,6 +17,6 @@ api._deauthorize()
 Add shortcut methods to make subclassing WebApi easier. Subclassing WebApi should be as elegant and well defined as subclassing the "base entity" class for a modern ORM dbms.
 
 
-== Python 3 support ==
+== Python 2 Compatibility ==
 
-Support python 3.
+Maybe?
