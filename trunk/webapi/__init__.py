@@ -3,17 +3,12 @@
 #	http://code.google.com/p/python-webapi/
 #	License: BSD
 #	Author: Jordan Perr
-#	Version: 1
-#	Date: 9/30/2010
+#	Version: 1.1
+#	Date: 3/28/2011
 ##########################
 
-import urllib, urllib2
-import sys
-try:
-	import json
-except:
-	import simplejson as json
-
+from urllib import parse, request, error
+import sys, json
 
 class WebApi(object):
 	_url = ""
@@ -43,13 +38,13 @@ class WebApi(object):
 		else:
 			returntype = self._returntype
 		# Construct query
-		query = urllib.urlencode(kwargs)
+		query = parse.urlencode(kwargs)
 		if method == "post":
-			req = urllib2.Request(self._url+self._curcall, query)
+			req = request.Request(self._url+self._curcall, query)
 		else:
-			req = urllib2.Request(self._url+self._curcall+"?"+query)
+			req = request.Request(self._url+self._curcall+"?"+query)
 		# Execute query
-		response = urllib2.urlopen(req).read()
+		response = request.urlopen(req).read()
 		# Process returned data
 		if returntype == "json":
 			return json.loads(response)
